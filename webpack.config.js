@@ -12,7 +12,7 @@ var config = {
         publicPath: "/public/"
     },
     /* plugins: [
-     new ExtractTextPlugin('styles/styles.css', {
+     new ExtractTextPlugin('styles/styles.styles', {
      publicPath: '/app/',
      allChunks: true
      })
@@ -30,7 +30,7 @@ var config = {
             }
             ,
             {
-                //extract and compile the css and Sass files
+                //extract and compile the styles and Sass files
                 test: /\.s?css$/,
                 include: SRC_DIR,
                 loader: ExtractTextPlugin.extract(

@@ -1,0 +1,63 @@
+.loginform
+{
+    text-align:center;
+    background-color: whitesmoke;
+    height:400px;
+    margin: auto;
+    width: 30%;
+    padding: 10px;
+    position: absolute;
+    right: 35%;
+    border-radius: 25px;
+
+}
+.partnersList
+{
+    text-align: center;
+    text-transform: capitalize;
+
+}
+.h1, h1 {
+    margin-top: 0 !important;
+}
+.navbar {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0 !important;
+    font-size: 12px;
+    letter-spacing: 5px;
+}
+.navbar-nav  li a:hover {
+    color: #1abc9c !important;
+}
+
+
+.bg1
+{
+background-color: #1abc9c;
+    width:100%;
+    height:60%;
+    margin-top: 0 !important;
+    text-align:-webkit-center;
+    background-color: black;
+color:white;
+}
+
+.bg2
+{
+    background-color: darkgray;
+    width:100%;
+    height:60%;
+    margin-top: 0 !important;
+    text-align:-webkit-center;
+
+}
+
+
+.social
+{
+    margin-right:25px;
+
+}

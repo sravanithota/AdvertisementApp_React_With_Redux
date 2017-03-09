@@ -1,50 +1,102 @@
 /**
- * Created by Sravani on 1/31/2017.
+ * Created by Sravani on 2/23/2017.
  */
-import React from "react";
-import ReactDOM from "react-dom";
-import {MySelf} from "./MySelf";
+import React from 'react';
+import axios from 'axios';
+import {NavItem, Navbar, NavDropdown, MenuItem, Nav} from 'react-bootstrap';
+import {Link,browserHistory} from  'react-router';
+import {isLoggedIn} from './constants/isLoggedIn'
+export class Header extends React.Component {
 
-export class Header extends React.Component
-{
-    constructor(props)
-    {
-        super(props);
-        this.state={
-            myData:"hello"
+    constructor(){
+        super();
+        this.state= {
+            signInLink: "show",
+            signOutLink:"hide",
+            sampleLink:"hide"
+        }
+
+
+    }
+    componentWillMount() {
+        if (isLoggedIn()) {
+            this.setState({
+                signInLink: "hide",
+            signOutLink:"show",
+            sampleLink:"show"
+        });
+        }
+        else {
+            this.setState({
+            signInLink:"show",
+            signOutLink:"hide",
+            sampleLink:"hide"
+        });
+        }
+    }
+    signout(e) {
+        var token = localStorage.getItem("token");
+        console.log("tokennnnnnnnnnn"+ token);
+        var config = {
+            headers: {'Content-Type': 'application/json', 'token': token}
+        };
+
+        axios.post("/signout", config)
+            .then((res) => {
+                console.log(res);
+                this.signoutCallBack(res.data);
+            })
+            .catch((err) => {
+                    console.log("server error");
+                }
+            )
+
+    }
+
+    signoutCallBack(result) {
+        if (result.error) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("partnerName");
+            console.log("error in result body");
+        } else {
+
+            localStorage.removeItem("token");
+            localStorage.removeItem("partnerName");
+            location.reload();
+            browserHistory.push('/');
+            console.log("successfully signedout");
+
         }
 
     }
-    onClickHandler()
-    {
-         this.setState({myData:"i am changed"});
-    }
 
-    updateChange(e)
-    {
-        this.setState({myData:e.target.value});
-    }
-    clearInput()
-    {
-        this.setState({myData:''});
-        ReactDOM.findDOMNode(this.refs.myInput).focus();
-    }
+    render() {
+        return (
+            <div>
+                <nav className="navbar navbar-default">
+                        <div className="navbar-header">
+                            <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                                <span className="icon-bar"></span>
+                                <span className="icon-bar"></span>
+                                <span className="icon-bar"></span>
+                            </button>
+                            <a className="navbar-brand">React project</a>
+                        </div>
+                        <div className="collapse navbar-collapse" id="myNavbar">
+                            <ul className="nav navbar-nav navbar-right">
+                                <li className={this.state.sampleLink}><Link to={"/home"}>Home</Link></li>
+                                <li className={this.state.signInLink}><Link to={"/signin"}>SiginIn</Link></li>
+                                <li className={this.state.sampleLink}><Link to={"/create"}>Create Ad</Link></li>
+                                <li className={this.state.sampleLink}><Link to={"/partners"}>partners</Link></li>
+                                <li className={this.state.signOutLink}><Link to="/" onClick={this.signout.bind(this)}>SignOut</Link></li>
 
-    render()
-    {
+                            </ul>
 
-        return(
-          <div>
+                        </div>
 
-              <h1>Helooooooooooooooooooooooooo {this.state.myData}</h1>
-              <MySelf mydata={this.state.myData} myvalue="90" />
-              <input id="inputs" value={this.state.myData} onChange={this.updateChange.bind(this)} ref="myInput"></input>
-              <button onClick={this.onClickHandler.bind(this)}>press me</button>
-              <button onClick={this.clearInput.bind(this)}>clear</button>
-          </div>
+                </nav>
+            </div>
         );
     }
 
 }
-
-
